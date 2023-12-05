@@ -1,6 +1,9 @@
 <?php
 include_once("../db.php");
 include_once("../student.php");
+include_once("../student_details.php");
+include_once("../town_city.php");
+include_once("../province.php");
 
 $db = new Database();
 $connection = $db->getConnection();
@@ -10,10 +13,9 @@ $student = new Student($db);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Records</title>
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
 </head>
 <body>
     <!-- Include the header -->
@@ -21,7 +23,7 @@ $student = new Student($db);
     <?php include('../includes/navbar.php'); ?>
 
     <div class="content">
-    <h2>Student Records</h2>
+    <h2 class="record-title">Student Records</h2>
     <table class="orange-theme">
         <thead>
             <tr>
@@ -31,6 +33,11 @@ $student = new Student($db);
                 <th>Last Name</th>
                 <th>Gender</th>
                 <th>Birthdate</th>
+                <th>Contact Number</th>
+                <th>Street</th>
+                <th>Town City</th>
+                <th>Province</th>
+                <th>Zip Code</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -49,11 +56,18 @@ $student = new Student($db);
                 <td><?php echo $result['middle_name']; ?></td>
                 <td><?php echo $result['last_name']; ?></td>
                 <td><?php echo $result['gender']; ?></td>
-                <td><?php echo $result['birthday']; ?></td>
+                <td><?php echo date('M j, Y', strtotime($result['birthday'])); ?></td>   
+                
+                
+                <td><?php echo $result['contact_number']; ?></td>
+                <td><?php echo $result['street']; ?></td>
+                <td><?php echo $result['town_city']; ?></td>
+                <td><?php echo $result['province']; ?></td>
+                <td><?php echo $result['zip_code']; ?></td>
                 <td>
-                    <a href="student_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
-                    |
-                    <a href="student_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
+                    <a class="edit-button" href="student_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
+                    
+                    <a class="delete-button" href="student_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
                 </td>
             </tr>
         <?php } ?>

@@ -11,11 +11,11 @@ $data = array();
 
 // generate 15 records
 for($i=1; $i<=20; $i++){
-    array_push($data, $faker->unique()->province);
+    array_push($data, $faker->unique()->city);
 }
 print_r($data);
 
-$sql = "INSERT INTO province(name) VALUES (:name)";
+$sql = "INSERT INTO town_city(name) VALUES (:name)";
 $stmt = $connection->prepare($sql);
 
 

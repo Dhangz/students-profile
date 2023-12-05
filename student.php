@@ -1,6 +1,7 @@
 <?php
 include_once("db.php"); // Include the file with the Database class
 
+
 class Student {
     private $db;
 
@@ -37,13 +38,36 @@ class Student {
             echo "Error: " . $e->getMessage();
             throw $e; // Re-throw the exception for higher-level handling
         }
+        
     }
 
     public function read($id) {
         try {
             $connection = $this->db->getConnection();
 
-            $sql = "SELECT * FROM students WHERE id = :id";
+            $sql = "SELECT 
+            s.id AS id,
+            s.student_number,
+            s.first_name,
+            s.middle_name,
+            s.last_name,
+            s.gender,
+            s.birthday,
+            sd.contact_number,
+            sd.street,
+            tc.id AS town_city,
+            p.id AS province,
+            sd.zip_code
+            FROM 
+                students s
+            JOIN 
+                student_details sd ON s.id = sd.student_id
+            JOIN 
+                town_city tc ON sd.town_city = tc.id
+            JOIN 
+                province p ON sd.province = p.id
+            WHERE 
+                s.id = :id;";
             $stmt = $connection->prepare($sql);
             $stmt->bindValue(':id', $id);
             $stmt->execute();
@@ -60,29 +84,44 @@ class Student {
 
     public function update($id, $data) {
         try {
-            $sql = "UPDATE students SET
-                    student_number = :student_number,
-                    first_name = :first_name,
-                    middle_name = :middle_name,
-                    last_name = :last_name,
-                    gender = :gender,
-                    birthday = :birthday
-                    WHERE id = :id";
-
+            $sql = "UPDATE students s
+                    JOIN student_details sd ON s.id = sd.student_id
+                    SET
+                    s.student_number = :student_number,
+                    s.first_name = :first_name,
+                    s.middle_name = :middle_name,
+                    s.last_name = :last_name,
+                    s.gender = :gender,
+                    s.birthday = :birthday,
+                    sd.contact_number = :contact_number,
+                    sd.street = :street,
+                    sd.town_city = :town_city, -- Use town_city_id (assuming it's the town/city ID)
+                    sd.province = :province,
+                    sd.zip_code = :zip_code
+                    WHERE s.id = :id";
+    
             $stmt = $this->db->getConnection()->prepare($sql);
+    
             // Bind parameters
-            $stmt->bindValue(':id', $data['id']);
+            $stmt->bindValue(':id', $id);
             $stmt->bindValue(':student_number', $data['student_number']);
             $stmt->bindValue(':first_name', $data['first_name']);
             $stmt->bindValue(':middle_name', $data['middle_name']);
             $stmt->bindValue(':last_name', $data['last_name']);
             $stmt->bindValue(':gender', $data['gender']);
             $stmt->bindValue(':birthday', $data['birthday']);
-
+            $stmt->bindValue(':contact_number', $data['contact_number']);
+            $stmt->bindValue(':street', $data['street']);
+            $stmt->bindValue(':town_city', $data['town_city']);  // Assuming town_city_id is the correct field
+            $stmt->bindValue(':province', $data['province']);
+            $stmt->bindValue(':zip_code', $data['zip_code']);
+    
             // Execute the query
             $stmt->execute();
-
-            return $stmt->rowCount() > 0;
+    
+            // Return the updated data
+            return $this->read($id);
+    
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             throw $e; // Re-throw the exception for higher-level handling
@@ -91,30 +130,61 @@ class Student {
 
     public function delete($id) {
         try {
-            $sql = "DELETE FROM students WHERE id = :id";
-            $stmt = $this->db->getConnection()->prepare($sql);
-            $stmt->bindValue(':id', $id);
-            $stmt->execute();
-
-            // Check if any rows were affected (record deleted)
-            if ($stmt->rowCount() > 0) {
+            $this->db->getConnection()->beginTransaction();
+    
+            // Delete related records in student_details
+            $sqlDetails = "DELETE FROM student_details WHERE student_id = :id";
+            $stmtDetails = $this->db->getConnection()->prepare($sqlDetails);
+            $stmtDetails->bindValue(':id', $id);
+            $stmtDetails->execute();
+    
+            // Now delete the student
+            $sqlStudent = "DELETE FROM students WHERE id = :id";
+            $stmtStudent = $this->db->getConnection()->prepare($sqlStudent);
+            $stmtStudent->bindValue(':id', $id);
+            $stmtStudent->execute();
+    
+            $this->db->getConnection()->commit();
+    
+            // Check if any rows were affected (student deleted)
+            if ($stmtStudent->rowCount() > 0) {
                 return true; // Record deleted successfully
             } else {
                 return false; // No records were deleted (student_id not found)
             }
         } catch (PDOException $e) {
+            $this->db->getConnection()->rollBack();
             echo "Error: " . $e->getMessage();
             throw $e; // Re-throw the exception for higher-level handling
         }
     }
-
+    
     public function displayAll(){
-        try {
-            $sql = "SELECT * FROM students LIMIT 10"; // Modify the table name to match your database
-            $stmt = $this->db->getConnection()->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
+    try {
+
+        $sql = "SELECT 
+        s.id, 
+        s.student_number, 
+        s.first_name, 
+        s.last_name, 
+        s.middle_name,
+        s.gender, 
+        s.birthday, 
+        sd.contact_number, 
+        sd.street,
+        tc.name as town_city, 
+        p.name as province, 
+        sd.zip_code
+    FROM students s
+    JOIN student_details sd ON s.id = sd.student_id
+    JOIN town_city tc ON sd.town_city = tc.id
+    JOIN province p ON sd.province = p.id;";
+
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+        
         } catch (PDOException $e) {
             // Handle any potential errors here
             echo "Error: " . $e->getMessage();
@@ -180,25 +250,25 @@ class Student {
 
 $student = new Student(new Database());
 
-// Test the create method
-$student_id = $student->testCreateStudent();
+// // Test the create method
+// $student_id = $student->testCreateStudent();
 
-// Test the read method with the created student ID
-$student->testReadStudent($student_id);
+// // Test the read method with the created student ID
+// $student->testReadStudent($student_id);
 
-// Test the update method with the created student ID and updated data
-$update_data = [
-    'id' => $student_id,
-    'student_number' => 'S67890',
-    'first_name' => 'Alice',
-    'middle_name' => 'Jane',
-    'last_name' => 'Doe',
-    'gender' => '0',
-    'birthday' => '1995-05-20',
-];
-$student->testUpdateStudent($student_id, $update_data);
+// // Test the update method with the created student ID and updated data
+// $update_data = [
+//     'id' => $student_id,
+//     'student_number' => 'S67890',
+//     'first_name' => 'Alice',
+//     'middle_name' => 'Jane',
+//     'last_name' => 'Doe',
+//     'gender' => '0',
+//     'birthday' => '1995-05-20',
+// ];
+// $student->testUpdateStudent($student_id, $update_data);
 
-// Test the delete method with the created student ID
-$student->testDeleteStudent($student_id);
+// // Test the delete method with the created student ID
+// $student->testDeleteStudent($student_id);
 
 ?>

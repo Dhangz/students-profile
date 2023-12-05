@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     'middle_name' => $_POST['middle_name'],
     'last_name' => $_POST['last_name'],
     'gender' => $_POST['gender'],
-    'birthday' => $_POST['birthday'],
+    'birthday' => $_POST['birthday']
     ];
 
     // Instantiate the Database and Student classes
@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Failed to insert the record.";
         }
+        header("Location: students.view.php");
     }
 
     
@@ -55,11 +56,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
 
-    <title>Add Student Data</title>
+
+    <title class="record-title">Add Student Data</title>
 </head>
 <body>
     <!-- Include the header and navbar -->
@@ -83,8 +85,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="gender">Gender:</label>
         <select name="gender" id="gender" required>
-            <option value="0">Male</option>
-            <option value="1">Female</option>
+        <option value="">--SELECT--</option>
+            <option value="M">Male</option>
+            <option value="M">Female</option>
         </select>
 
         <label for="birthday">Birthdate:</label>
@@ -104,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $database = new Database();
             $towns = new TownCity($database);
-            $results = $towns->getAll();
+            $results = $towns->displayAll();
             // echo print_r($results);
             foreach($results as $result)
             {
@@ -119,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $database = new Database();
             $provinces = new Province($database);
-            $results = $provinces->getAll();
+            $results = $provinces->displayAll();
             // echo print_r($results);
             foreach($results as $result)
             {

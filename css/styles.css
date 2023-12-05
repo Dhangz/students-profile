@@ -1,230 +1,436 @@
 .sidebar {
-    position: fixed;
-    width: 250px;
-    height: 100%;
-    background-color: #D8F3DC; /* Background color using the provided hex code */
-    color: #74C69D; /* Text color using the provided hex code */
-    padding: 20px;
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  left: -250px;
+  background-color: #fff; /* Background color using the provided hex code */
+  color: rgba(0, 0, 0); /* Text color using the provided hex code */
+  padding: 20px;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 30px;
+  transition: 0.5s;
+}
+
+.logo {
+  margin-top: 20px;
+  text-align: center;
+  border-bottom: 4px solid rgb(255, 255, 255, 0.3);
+  color: #000;
+  margin-right: 30px;
+}
+.logo a img {
+  border-radius: 50%;
+  border: 5px solid rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+  font-size: 32px;
+  margin-top: 30px;
+  color: #000;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  margin-right: 30px;
 }
 
 .sidebar li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+  display: block;
+  padding: 15px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.sidebar li:hover {
+  background-color: #e9e9e9;
 }
 
 .sidebar a {
-    text-decoration: none;
-    color: #74C69D; /* Text color using the provided hex code */
-    font-size: 18px;
+  text-decoration: none;
+  color: #000; /* Text color using the provided hex code */
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .content {
-    margin-left: 270px; /* Adjust to match the sidebar width */
-    padding: 50px;
+  margin-left: 250px; /* Adjust to match the sidebar width */
+  padding: 50px;
 }
 
 /* Highlight the selected menu item */
 .sidebar a:hover {
-    color: #B7E4C7; /* Hover color using the provided hex code */
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  /* Hover color using the provided hex code */
+}
+.toggle-btn {
+  font-size: 24px;
+  cursor: pointer;
+  position: fixed;
+  margin-left: 10px;
+  margin-top: 10px;
+  z-index: 1;
+  color: black;
+  top: 0;
 }
 
 /* Body */
+* {
+  font-family: Poppins;
+}
 body {
-    font-family: Arial, sans-serif;
-    background-color: #95D5B2; /* Background color using the provided hex code */
-    color: #333; /* Text color */
-    margin: 0;
-    padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Background color using the provided hex code */
+  color: #333; /* Text color */
+  margin: 0;
+  padding: 0;
 }
 
 /* Header */
 h1 {
-    color: #74C69D; /* Header color using the provided hex code */
+  color: rgba(0, 0, 0); /* Header color using the provided hex code */
 }
 
 /* Existing CSS remains the same */
 
 /* Style for the dropdown menu */
 .dropdown {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown .dropbtn {
-    text-decoration: none;
-    color: #74C69D; /* Text color using the provided hex code */
-    font-size: 18px;
+  text-decoration: none;
+  color: #000; /* Text color using the provided hex code */
+  font-size: 18px;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #D8F3DC; /* Background color for the dropdown using the provided hex code */
-    min-width: 160px;
-    z-index: 1;
+  display: none;
+  position: absolute;
+  background-color: #f4f4f4; /* Background color for the dropdown using the provided hex code */
+  min-width: 100%;
+  z-index: 1;
+  left: 0;
+  top: 60px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 .dropdown-content a {
-    color: #74C69D; /* Text color using the provided hex code */
-    text-decoration: none;
-    display: block;
-    padding: 10px;
+  color: #000; /* Text color using the provided hex code */
+  text-decoration: none;
+  display: block;
+  padding: 12px 16px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd; /* Hover effect on the dropdown items */
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+  display: block;
 }
 
+.icon {
+  float: right;
+}
 /* Tables */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    background-color: #D8F3DC; /* Table background color using the provided hex code */
-    border: 1px solid #95D5B2; /* Table border color using the provided hex code */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #fff; /* Table background color using the provided hex code */
+  border: 1px solid #ddd; /* Table border color using the provided hex code */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #95D5B2; /* Table border color using the provided hex code */
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #f4f4f4; /* Table border color using the provided hex code */
+}
+
+tr:nth-child(even) {
+  background-color: #ddd;
 }
 
 th {
-    background-color: #B7E4C7; /* Header color using the provided hex code */
+  background-color: #e5e5e5; /* Header color using the provided hex code */
+  padding: 20px;
+  text-transform: uppercase;
 }
 
 /* Forms */
 form {
-    background-color: #D8F3DC; /* Form background color using the provided hex code */
-    border: 1px solid #95D5B2; /* Form border color using the provided hex code */
-    padding: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 500px;
+  background-color: #fff; /* Form background color using the provided hex code */
+  border: 1px solid #ddd; /* Form border color using the provided hex code */
+  padding: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 900px;
+  border-radius: 10px;
 }
 
 .centered-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% of the viewport height */
 }
 
 .centered-form label {
-    text-align: left; /* Keep labels left-aligned */
+  text-align: left; /* Keep labels left-aligned */
 }
 
 label {
-    display: block;
-    margin-bottom: 10px;
-    color: #74C69D; /* Text color using the provided hex code */
+  display: block;
+  margin-bottom: 10px;
+  color: #aca9a9; /* Text color using the provided hex code */
 }
 
 input[type="text"],
 input[type="date"],
 select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #74C69D; /* Form border color using the provided hex code */
-    border-radius: 5px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd; /* Form border color using the provided hex code */
+  border-radius: 5px;
+  background-color: #e9e9e9;
+  outline: none;
 }
 
 input[type="submit"] {
-    background-color: #74C69D; /* Submit button color using the provided hex code */
-    color: #D8F3DC; /* Text color using the provided hex code */
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #4ea2fc; /* Submit button color using the provided hex code */
+  color: #fff; /* Theaderext color using the provided hex code */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in;
 }
 
 input[type="submit"]:hover {
-    background-color: #3DAC78; /* Slightly darker hover color using the provided hex code */
+  background-color: #007bff; /* Slightly darker hover color using the provided hex code */
 }
 
 /* Header */
 header {
-    background-color: #D8F3DC;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+  background-color: #fff;
+  text-align: center;
+  padding: 25px;
+  width: 100%;
 }
 
 .header-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-content h1 {
-    font-size: 36px;
-    margin: 0;
-}
-
-.header-content p {
-    font-size: 18px;
-    margin: 10px 0;
+  font-size: 36px;
+  margin: 0;
 }
 
 .button-link {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #74C69D; /* Button background color */
-    color: #fff; /* Button text color */
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4ea2fc; /* Button background color */
+  color: #fff; /* Button text color */
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .button-link:hover {
-    background-color: #3DAC78; /* Button background color on hover */
+  background-color: #007bff; /* Button background color on hover */
 }
 
 /* Footer */
 footer {
-    background-color: #D8F3DC;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+  background-color: whitesmoke;
+  color: rgba(0, 0, 0);
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  height: 30px;
 }
 
 .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: right;
+  align-items: center;
 }
 
 .footer-links {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  position: static;
+  left: 0;
+  bottom: 0;
 }
 
 .footer-links li {
-    display: inline;
-    margin: 0 10px;
+  display: inline;
+  margin: 0 10px;
 }
 
 .footer-links a {
-    text-decoration: none;
-    color: #fff;
+  text-decoration: none;
+  color: #aca9a9;
+  transition: color 0.3s ease;
 }
 
 /* Change font color for links on hover */
 .footer-links a:hover {
-    color: #74C69D;
+  color: #000;
+}
+
+/*Buttons*/
+
+.edit-button {
+  padding: 10px 17px;
+  background-color: #74c69d;
+  color: white;
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 3px;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #3dac78;
+}
+
+.delete-button {
+  padding: 10px 17px;
+  background-color: #f96666;
+  color: white;
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 3px;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #ff0000f0;
+}
+
+.header {
+  text-align: center;
+}
+
+.reports-content {
+  padding: 50px;
+  margin-left: 290px; /* Adjust to match the sidebar width */
+  margin-top: 0;
+  width: 500px;
+  height: 700px;
+}
+
+#report02 {
+  height: 700px;
+  width: 900px;
+  margin-left: 290px; /* Adjust to match the sidebar width */
+}
+
+.header {
+  text-align: left;
+  margin-left: 440px;
+}
+
+.header .title {
+  font-size: 2rem;
+  color: rgba(0, 0, 0);
+  font-weight: 800;
+  margin-bottom: 0;
+  letter-spacing: 5px;
+}
+
+.header .category {
+  font: 1rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0);
+  letter-spacing: 3px;
+}
+
+.record-title {
+  font-size: 2rem;
+  color: rgba(0, 0, 0);
+  font-weight: 800;
+  margin-bottom: 0;
+  letter-spacing: 5px;
+}
+
+#dashboard-title {
+  margin-left: -100px;
+}
+
+/*Dasho Board*/
+.main-container {
+  position: absolute;
+  top: 250px;
+  left: 340px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-left: 0;
+  flex-wrap: wrap;
+}
+
+.main-container .dashboard-links {
+  text-decoration: none;
+}
+
+.dashboard-card {
+  width: 450px;
+  height: 300px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  color: #000;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dashboard-card:hover {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.material-symbols-outlined {
+  font-size: 200px;
+  color: #3498db; /* Change the color as needed */
+  margin-bottom: 10px; /* Adjust spacing as needed */
 }
